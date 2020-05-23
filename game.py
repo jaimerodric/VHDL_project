@@ -8,6 +8,24 @@ from cocotb.handle import Force, Release, Deposit
 # Import pygame for graphical representation
 import pygame
 
+pygame.init()
+
+
+class Personaje:
+    def __init__(self,image,height,speed):
+        self.speed=speed
+        self.image=image
+        self.pos=image.get_rect().move(0,height)
+    def move(self):
+        self.pos=self.pos.move(0,self.speed)
+        if self.pos.right > 600:
+            self.pos.left=0
+
+player=pygame.image.load('').convert()
+background=pygame.image.load('').convert()
+personaje1=Personaje()
+personaje2=Personaje()
+            
 # Times in nanoseconds
 CLK_PERIOD     = 20
 RESET_DURATION = 20
@@ -28,7 +46,8 @@ def init_screen():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_SIZE))
     surface = pygame.Surface((VGA_SIZE))
-    return screen, surface
+    screen.blit(background,(0,0))
+    return screen,surface
 
 @cocotb.coroutine
 def update_screen(dut, screen, surface): #(x, y, color):
@@ -95,6 +114,7 @@ def test(dut):
 
     # Init screen
     screen, surface = init_screen()
+    
 
     # Fork coroutine that continuosly updates the screen
     cocotb.fork(update_screen(dut, screen, surface))
