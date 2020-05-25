@@ -1,5 +1,5 @@
-# Uncomment this line if you need to generate a vcd waveform of the simulation
-#SIM_ARGS ?= --vcd=sim.vcd
+#Uncomment this line if you need to generate a vcd waveform of the simulation
+SIM_ARGS ?= --vcd=sim.vcd
 
 SIM=ghdl
 TOPLEVEL_LANG=vhdl
@@ -9,15 +9,13 @@ COCOTB_ENABLE_PROFILING=true
 SIM_BUILD=.
 
 # Add VHDL source files here
-#VHDL_SOURCES += $(PWD)/vhdl/contador.vhd
-#VHDL_SOURCES += $(PWD)/vhdl/comparador.vhd
-#VHDL_SOURCES += $(PWD)/vhdl/dibuja.vhd
-#VHDL_SOURCES += $(PWD)/vhdl/vga_driver.vhd
+VHDL_SOURCES += $(PWD)/estado_luchador.vhd
+
 
 # TOPLEVEL entity in Verilog/VHDL
-#TOPLEVEL = vga_driver
+TOPLEVEL = estado_luchador
 # MODULE is the name of the python test file
-MODULE = virtual_board
+MODULE = game
 
 include $(shell cocotb-config --makefiles)/Makefile.inc
 include $(shell cocotb-config --makefiles)/Makefile.sim
