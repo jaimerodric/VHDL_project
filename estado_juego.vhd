@@ -24,7 +24,7 @@ begin
 
 	dist <= std_logic_vector(unsigned(pos2) - unsigned(pos1));
 
-	if (unsigned(dist) < 20) then
+	if (unsigned(dist) < 20) AND (unsigned(pos2) > unsigned(pos1)) then
 		if(estado_luchador1 = "01" AND estado_luchador2 = "00") then
 			fin_juego <= '1';
 		elsif (estado_luchador1 = "00" AND estado_luchador2 = "01") then
