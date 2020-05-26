@@ -27,20 +27,20 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity posicion_luchador is
-	Generic ( p_inicial:std_logic_vector:= "0000110010"
+	Generic ( p_inicial:integer:= 50
 				);
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
 			  estado_lucha : in  STD_LOGIC_VECTOR (1 downto 0);
            right : in  STD_LOGIC;
            left : in  STD_LOGIC;
-           posicion : out  STD_LOGIC_VECTOR (9 downto 0));
+           posicion : out  integer);
 end posicion_luchador;
 
 architecture Behavioral of posicion_luchador is
 
 signal p_cont,cont: INTEGER;
-signal p_posicion,posicion_aux: STD_LOGIC_VECTOR (9 downto 0);
+signal p_posicion,posicion_aux: integer;
 
 begin
 
@@ -68,10 +68,10 @@ begin
 		p_cont<=0;
 	
 		if estado_lucha = "00" then 
-			if right='1' and left ='0' and unsigned(posicion_aux)<200 then
-				p_posicion<=std_logic_vector(unsigned(posicion_aux)+1);
-			elsif right='0' and left ='1' and unsigned(posicion_aux)>0 then
-				p_posicion<=std_logic_vector(unsigned(posicion_aux)-1);
+			if right='1' and left ='0' and posicion_aux<200 then
+				p_posicion<=posicion_aux+1;
+			elsif right='0' and left ='1' and posicion_aux>0 then
+				p_posicion<=posicion_aux-1;
 			end if;
 		end if;
 		
