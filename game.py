@@ -67,11 +67,19 @@ def update_screen(dut,screen,images1,images2): #(x, y, color):
         screen.fill((255,255,255))
         #pos1=dut.pos1.value.integer
         if dut.estado_luchad1 ==0b00:
-            screen.blit(images1[0], (dut.pos1.value.integer,0))
+            screen.blit(images1[0], (dut.pos1,0))
         if dut.estado_luchad1 == 0b01:
-            screen.blit(images1[1], (dut.pos1.value.integer,0))
+            screen.blit(images1[1], (dut.pos1,0))
         if dut.estado_luchad1 == 0b10:
-            screen.blit(images1[2], (dut.pos1.value.integer,0))
+            screen.blit(images1[2], (dut.pos1,0))
+        if dut.estado_luchad2 ==0b00:
+            screen.blit(images2[0], (dut.pos2,0))
+        if dut.estado_luchad2 == 0b01:
+            screen.blit(images2[1], (dut.pos2,0))
+        if dut.estado_luchad2 == 0b10:
+            screen.blit(images2[2], (dut.pos2,0))
+        if dut.fin_juego==1:
+            print(dut.fin_juego)
             
         
 
