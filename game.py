@@ -28,9 +28,6 @@ RESET_DURATION = 20
 # Times in miliseconds
 TEST_DURATION  = 20
 
-# VGA resolution
-VGA_SIZE       = (200, 60)
-
 
 # Window size. The screen can be bigger than needed for the VGA, so in the
 # extra space we may render buttons, leds, etc
@@ -64,17 +61,17 @@ def init_screen():
     return screen,images1,images2
 
 @cocotb.coroutine
-def update_screen(dut, screen,images1,images2): #(x, y, color):
+def update_screen(dut,screen,images1,images2): #(x, y, color):
     while True:
         yield RisingEdge(dut.clk)
         screen.fill((255,255,255))
         #pos1=dut.pos1.value.integer
         if dut.estado_luchad1 ==0b00:
-            screen.blit(images1[0], (0,0))
+            screen.blit(images1[0], (dut.pos1.value.integer,0))
         if dut.estado_luchad1 == 0b01:
-            screen.blit(images1[1], (0,0))
+            screen.blit(images1[1], (dut.pos1.value.integer,0))
         if dut.estado_luchad1 == 0b10:
-            screen.blit(images1[2], (0,0))
+            screen.blit(images1[2], (dut.pos1.value.integer,0))
             
         
 
@@ -150,6 +147,10 @@ def test(dut):
     dut.DOWN = 0
     dut.LEFT = 0
     dut.RIGHT = 0
+    dut.W = 0
+    dut.A = 0
+    dut.S = 0
+    dut.D = 0
 
     # Init screen
     screen,images1,images2 = init_screen() 
