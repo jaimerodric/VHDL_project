@@ -28,7 +28,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity estado_luchador is
 	Generic (VAL_SAT_CONT:integer:=200; --modificar este valor para modificar tiempo que el muñeco salta
-				ANCHO_CONTADOR:integer:=20); -- modificar para que el vector pueda contar hasta numoer de arriba
+				ANCHO_CONTADOR:integer:=20); -- modificar para que el vector pueda contar hasta numero de arriba
 				
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
