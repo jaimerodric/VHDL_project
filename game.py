@@ -53,34 +53,35 @@ def init_screen():
 
 
     images2=[n_player2,a_player2,d_player2]
-    
 
+    background=pygame.transform.scale(pygame.image.load('background.jpg').convert(),(SCREEN_SIZE))
+    game_over=pygame.transform.scale(pygame.image.load('game_over.jpg').convert(),(SCREEN_SIZE))
+
+    layouts=[screen,background,game_over]
     
-   #surface=pygame.transform.scale(pygame.image.load('background.jpg').convert(),(VGA_SIZE))
-   # screen.blit(surface,(0,0))
-    return screen,images1,images2
+    return layouts,images1,images2
 
 @cocotb.coroutine
-def update_screen(dut,screen,images1,images2): #(x, y, color):
+def update_screen(dut,layouts,images1,images2): #(x, y, color):
     while True:
         yield RisingEdge(dut.clk)
-        screen.fill((255,255,255))
-        #pos1=dut.pos1.value.integer
-        if dut.estado_luchad1 ==0b00:
-            screen.blit(images1[0], (dut.pos1,0))
-        if dut.estado_luchad1 == 0b01:
-            screen.blit(images1[1], (dut.pos1,0))
-        if dut.estado_luchad1 == 0b10:
-            screen.blit(images1[2], (dut.pos1,0))
-        if dut.estado_luchad2 ==0b00:
-            screen.blit(images2[0], (dut.pos2,0))
-        if dut.estado_luchad2 == 0b01:
-            screen.blit(images2[1], (dut.pos2,0))
-        if dut.estado_luchad2 == 0b10:
-            screen.blit(images2[2], (dut.pos2,0))
         if dut.fin_juego==1:
-            print(dut.fin_juego)
-            
+            layouts[0].blit(layouts[2],(0,0))
+        else:
+            layouts[0].blit(layouts[1],(0,0))
+            if dut.estado_luchad1 ==0b00:
+                layouts[0].blit(images1[0], (dut.pos1,10))
+            if dut.estado_luchad1 == 0b01:
+                layouts[0].blit(images1[1], (dut.pos1,10))
+            if dut.estado_luchad1 == 0b10:
+                layouts[0].blit(images1[2], (dut.pos1,10))
+            if dut.estado_luchad2 ==0b00:
+                layouts[0].blit(images2[0], (dut.pos2,10))
+            if dut.estado_luchad2 == 0b01:
+                layouts[0].blit(images2[1], (dut.pos2,10))
+            if dut.estado_luchad2 == 0b10:
+                layouts[0].blit(images2[2], (dut.pos2,10))
+           
         
 
         pygame.display.flip()
@@ -161,10 +162,10 @@ def test(dut):
     dut.D = 0
 
     # Init screen
-    screen,images1,images2 = init_screen() 
+    layouts,images1,images2 = init_screen() 
  
     # Fork coroutine that continuosly updates the screen
-    cocotb.fork(update_screen(dut, screen,images1,images2))
+    cocotb.fork(update_screen(dut,layouts,images1,images2))
 
     # Fork coroutine that continuosly checks for button presses
     cocotb.fork(check_for_events(dut))
