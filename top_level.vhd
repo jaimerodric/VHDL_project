@@ -56,12 +56,13 @@ component estado_luchador
 end component;
 	
 component posicion_luchador
+	Generic ( p_inicial:std_logic_vector:= "0000110010"
+				);
 	Port (  clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
 			  estado_lucha : in  STD_LOGIC_VECTOR (1 downto 0);
            right : in  STD_LOGIC;
            left : in  STD_LOGIC;
-			  p_inicial: in  STD_LOGIC_VECTOR (9 downto 0);
            posicion : out  STD_LOGIC_VECTOR (9 downto 0));
 end component;
 
@@ -78,9 +79,6 @@ signal p_inicial_1, p_inicial_2, p1_aux, p2_aux : std_logic_vector(9 downto 0);
 
 
 begin
-
-	p_inicial_1 <= "0000110010";
-	p_inicial_2 <= "0010010110";
 
 	ESTADO_LUCHADOR1 : estado_luchador 
 						generic map( VAL_SAT_CONT => 200, 
@@ -102,22 +100,24 @@ begin
 									 down => S, 
 									 estado_lucha => estado_lucha2);
 						
-	POSICION_LUCHADOR1 : posicion_luchador 	
+	POSICION_LUCHADOR1 : posicion_luchador 
+						generic map( p_inicial => "0000110010"
+						)
 						port map (clk => clk, 
 									 rst => reset, 
 									 right => RIGHT, 
 									 left => LEFT, 
 									 estado_lucha => estado_lucha1, 
-									 p_inicial => p_inicial_1, 
 									 posicion => p1_aux);
 									 
 	POSICION_LUCHADOR2 : posicion_luchador 	
+						generic map( p_inicial => "0010010110"
+						)
 						port map (clk => clk, 
 									 rst => reset, 
 									 right => D, 
 									 left => A, 
-									 estado_lucha => estado_lucha2, 
-									 p_inicial => p_inicial_2, 
+									 estado_lucha => estado_lucha2,  
 									 posicion => p2_aux);
 									 
 	EST_JUEGO : estado_juego 
