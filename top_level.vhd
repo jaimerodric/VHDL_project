@@ -1,3 +1,22 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date:    19:29:13 05/26/2020 
+-- Design Name: 
+-- Module Name:    top_level - Behavioral 
+-- Project Name: 
+-- Target Devices: 
+-- Tool versions: 
+-- Description: 
+--
+-- Dependencies: 
+--
+-- Revision: 
+-- Revision 0.01 - File Created
+-- Additional Comments: 
+--
+----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -16,8 +35,8 @@ PORT (
 	reset: in std_logic;
 	pos1: out std_logic_vector(9 downto 0);
 	pos2: out std_logic_vector(9 downto 0);
-	estado_luchador1: out std_logic_vector(1 downto 0);
-	estado_luchador2: out std_logic_vector(1 downto 0);
+	estado_luchad1: out std_logic_vector(1 downto 0);
+	estado_luchad2: out std_logic_vector(1 downto 0);
 	fin_juego: out std_logic);
 	
 
@@ -26,7 +45,7 @@ end top_level;
 architecture Behavioral of top_level is
 
 component estado_luchador
-		Generic (VAL_SAT_CONT:integer:=200; --modificar este valor para modificar tiempo que el muñeco salta
+	Generic (VAL_SAT_CONT:integer:=200; --modificar este valor para modificar tiempo que el muñeco salta
 				ANCHO_CONTADOR:integer:=20); -- modificar para que el vector pueda contar hasta numoer de arriba
 				
     Port ( clk : in  STD_LOGIC;
@@ -37,7 +56,7 @@ component estado_luchador
 end component;
 	
 component posicion_luchador
-	Port ( clk : in  STD_LOGIC;
+	Port (  clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
 			  estado_lucha : in  STD_LOGIC_VECTOR (1 downto 0);
            right : in  STD_LOGIC;
@@ -55,21 +74,63 @@ component estado_juego
 end component;
 
 signal estado_lucha1, estado_lucha2 : std_logic_vector(1 downto 0);
-signal p_inicial_1, p_inicial_2 : std_logic_vector(9 downto 0);
+signal p_inicial_1, p_inicial_2, p1_aux, p2_aux : std_logic_vector(9 downto 0);
 
 
 begin
 
-	p_inicial_1 <= std_logic_vector(50);
-	p_inicial_2 <= std_logic_vector(150);
+	p_inicial_1 <= "0000110010";
+	p_inicial_2 <= "0010010110";
 
-	ESTADO_LUCHADOR1 : estado_luchador 	generic map( VAL_SAT_CONT => 200, ANCHO_CONTADOR=> 20)
-						port map (clk => clk, rst => reset, up => UP, down => DOWN, estado_lucha => estado_lucha1);
-	ESTADO_LUCHADOR2 : estado_luchador 	generic map( VAL_SAT_CONT => 200, ANCHO_CONTADOR=> 20)
-						port map (clk => clk, rst => reset, up => W, down => S, estado_lucha => estado_lucha2);
-	POSICION_LUCHADOR1 : posicion_luchador 	port map (clk => clk, rst => reset, right => RIGHT, left => LEFT, estado_lucha => estado_lucha1, p_inicial => p_inicial_1, posicion => pos1);
-	POSICION_LUCHADOR2 : posicion_luchador 	port map (clk => clk, rst => reset, right => D, left => A, estado_lucha => estado_lucha2, p_inicial => p_inicial_2, posicion => pos2);
-	ESTADO_JUEGO : estado_juego port map (pos1 => pos1, pos2 => pos2, estado_luchador1 => estado_lucha1, estado_luchador2 => estado_lucha2, fin_juego => fin_juego);
+	ESTADO_LUCHADOR1 : estado_luchador 
+						generic map( VAL_SAT_CONT => 200, 
+										 ANCHO_CONTADOR=> 20)
+										 
+						port map 	(clk => clk, 
+										rst => reset, 
+										up => UP, 
+										down => DOWN, 
+										estado_lucha => estado_lucha1);
+						
+	ESTADO_LUCHADOR2 : estado_luchador 	
+						generic map( VAL_SAT_CONT => 200, 
+										 ANCHO_CONTADOR=> 20)
+										 
+						port map (clk => clk, 
+									 rst => reset, 
+									 up => W, 
+									 down => S, 
+									 estado_lucha => estado_lucha2);
+						
+	POSICION_LUCHADOR1 : posicion_luchador 	
+						port map (clk => clk, 
+									 rst => reset, 
+									 right => RIGHT, 
+									 left => LEFT, 
+									 estado_lucha => estado_lucha1, 
+									 p_inicial => p_inicial_1, 
+									 posicion => p1_aux);
+									 
+	POSICION_LUCHADOR2 : posicion_luchador 	
+						port map (clk => clk, 
+									 rst => reset, 
+									 right => D, 
+									 left => A, 
+									 estado_lucha => estado_lucha2, 
+									 p_inicial => p_inicial_2, 
+									 posicion => p2_aux);
+									 
+	EST_JUEGO : estado_juego 
+						port map (pos1 => p1_aux, 
+									 pos2 => p2_aux, 
+									 estado_luchador1 => estado_lucha1, 
+									 estado_luchador2 => estado_lucha2, 
+									 fin_juego => fin_juego);
+									
+	pos1<=p1_aux;
+	pos2<=p2_aux;
+	
+	estado_luchad1<= estado_lucha1;
+	estado_luchad2<= estado_lucha2;
 
 end Behavioral;
-
