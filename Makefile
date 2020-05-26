@@ -10,10 +10,13 @@ SIM_BUILD=.
 
 # Add VHDL source files here
 VHDL_SOURCES += $(PWD)/estado_luchador.vhd
+VHDL_SOURCES += $(PWD)/posicion_luchador.vhd
+VHDL_SOURCES += $(PWD)/estado_juego.vhd
+VHDL_SOURCES += $(PWD)/top_level.vhd
 
 
 # TOPLEVEL entity in Verilog/VHDL
-TOPLEVEL = estado_luchador
+TOPLEVEL = top_level
 # MODULE is the name of the python test file
 MODULE = game
 
