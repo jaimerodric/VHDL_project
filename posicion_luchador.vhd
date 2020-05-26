@@ -27,12 +27,13 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity posicion_luchador is
+	Generic ( p_inicial:std_logic_vector:= "0000110010"
+				);
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
 			  estado_lucha : in  STD_LOGIC_VECTOR (1 downto 0);
            right : in  STD_LOGIC;
            left : in  STD_LOGIC;
-			  p_inicial: in  STD_LOGIC_VECTOR (9 downto 0);
            posicion : out  STD_LOGIC_VECTOR (9 downto 0));
 end posicion_luchador;
 
