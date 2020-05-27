@@ -45,8 +45,9 @@ end top_level;
 architecture Behavioral of top_level is
 
 component estado_luchador
-	Generic (VAL_SAT_CONT:integer:=200; --modificar este valor para modificar tiempo que el muñeco salta
-				ANCHO_CONTADOR:integer:=20); -- modificar para que el vector pueda contar hasta numoer de arriba
+	Generic (VAL_SAT_CONT:integer:=200;
+		 VAL_SAT_CONT1:integer:=300; --modificar este valor para modificar tiempo que el muñeco salta
+				ANCHO_CONTADOR:integer:=8); -- modificar para que el vector pueda contar hasta numoer de arriba
 				
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
@@ -83,7 +84,7 @@ begin
 	ESTADO_LUCHADOR1 : estado_luchador 
 						generic map( VAL_SAT_CONT => 200, 
 							     VAL_SAT_CONT1:integer:=300;
-										 ANCHO_CONTADOR=> 20)
+										 ANCHO_CONTADOR=> 8)
 										 
 						port map 	(clk => clk, 
 										rst => reset, 
@@ -94,7 +95,7 @@ begin
 	ESTADO_LUCHADOR2 : estado_luchador 	
 						generic map( VAL_SAT_CONT => 200,
 							     VAL_SAT_CONT1:integer:=300; 
-										 ANCHO_CONTADOR=> 20)
+										 ANCHO_CONTADOR=> 8)
 										 
 						port map (clk => clk, 
 									 rst => reset, 
