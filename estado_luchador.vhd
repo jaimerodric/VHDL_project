@@ -94,7 +94,9 @@ case estado_actual is
 		
 		if down='0' or (unsigned(cont1) = VAL_SAT_CONT1) then
 			estado_nuevo<=	normal;
+			p_cont1<=(others => '0');
 		else
+			p_cont1<=std_logic_vector(unsigned(cont1)+1);
 			estado_nuevo<=	defensa;
 		end if;
 		
