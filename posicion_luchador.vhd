@@ -68,7 +68,7 @@ begin
 		p_cont<=0;
 	
 		if estado_lucha = "00" then 
-			if right='1' and left ='0' and posicion_aux<200 then
+			if right='1' and left ='0' and posicion_aux<170 then
 				p_posicion<=posicion_aux+1;
 			elsif right='0' and left ='1' and posicion_aux>0 then
 				p_posicion<=posicion_aux-1;
