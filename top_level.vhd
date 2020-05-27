@@ -111,7 +111,7 @@ begin
 									 posicion => p1_aux);
 									 
 	POSICION_LUCHADOR2 : posicion_luchador 	
-						generic map( p_inicial => 150
+						generic map( p_inicial => 450
 						)
 						port map (clk => clk, 
 									 rst => reset, 

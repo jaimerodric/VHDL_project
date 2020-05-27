@@ -64,7 +64,7 @@ begin
 	
 	p_posicion<=posicion_aux;
 	
-	if cont=5 then -- ajustar este div_frec para un movimiento fluido
+	if cont=1 then -- ajustar este div_frec para un movimiento fluido
 		p_cont<=0;
 	
 		if estado_lucha = "00" then 
