@@ -31,7 +31,7 @@ TEST_DURATION  = 20
 
 # Window size. The screen can be bigger than needed for the VGA, so in the
 # extra space we may render buttons, leds, etc
-SCREEN_SIZE       = (200, 60)
+SCREEN_SIZE       = (600,300)
 
 
 
@@ -41,17 +41,15 @@ def init_screen():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_SIZE))
     
-    n_player1=pygame.image.load('Normal.png').convert_alpha()
-    a_player1=pygame.image.load('Ataque.png').convert_alpha()
-    d_player1=pygame.image.load('Defensa.png').convert_alpha()
-
+    n_player1=pygame.transform.scale(pygame.image.load('P1_neutral.png').convert_alpha(),(100,200))
+    a_player1=pygame.transform.flip(pygame.transform.scale(pygame.image.load('P1_attack.png').convert_alpha(),(100,200)),True,False)
+    d_player1=pygame.transform.scale(pygame.image.load('P1_defense.png').convert_alpha(),(100,200))
+    
     images1=[n_player1,a_player1,d_player1]
 
-    n_player2=pygame.transform.flip(n_player1,True,False)
-    a_player2=pygame.transform.flip(a_player1,True,False)
-    d_player2=pygame.transform.flip(d_player1,True,False)
-
-
+    n_player2=pygame.transform.scale(pygame.image.load('P2_neutral.png').convert_alpha(),(100,200))
+    a_player2=pygame.transform.scale(pygame.image.load('P2_attack.png').convert_alpha(),(100,200))
+    d_player2=pygame.transform.scale(pygame.image.load('P2_defense.png').convert_alpha(),(100,200))
     images2=[n_player2,a_player2,d_player2]
 
     background=pygame.transform.scale(pygame.image.load('background.jpg').convert(),(SCREEN_SIZE))
@@ -65,22 +63,23 @@ def init_screen():
 def update_screen(dut,layouts,images1,images2): #(x, y, color):
     while True:
         yield RisingEdge(dut.clk)
+        posicion_y=70
         if dut.fin_juego==1:
             layouts[0].blit(layouts[2],(0,0))
         else:
             layouts[0].blit(layouts[1],(0,0))
             if dut.estado_luchad1 ==0b00:
-                layouts[0].blit(images1[0], (dut.pos1,10))
+                layouts[0].blit(images1[0], (dut.pos1,posicion_y))
             if dut.estado_luchad1 == 0b01:
-                layouts[0].blit(images1[1], (dut.pos1,10))
+                layouts[0].blit(images1[1], (dut.pos1,posicion_y))
             if dut.estado_luchad1 == 0b10:
-                layouts[0].blit(images1[2], (dut.pos1,10))
+                layouts[0].blit(images1[2], (dut.pos1,posicion_y))
             if dut.estado_luchad2 ==0b00:
-                layouts[0].blit(images2[0], (dut.pos2,10))
+                layouts[0].blit(images2[0], (dut.pos2,posicion_y))
             if dut.estado_luchad2 == 0b01:
-                layouts[0].blit(images2[1], (dut.pos2,10))
+                layouts[0].blit(images2[1], (dut.pos2,posicion_y))
             if dut.estado_luchad2 == 0b10:
-                layouts[0].blit(images2[2], (dut.pos2,10))
+                layouts[0].blit(images2[2], (dut.pos2,posicion_y))
 
         pygame.display.flip()
 
