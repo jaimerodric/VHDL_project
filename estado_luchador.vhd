@@ -27,8 +27,9 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity estado_luchador is
-	Generic (VAL_SAT_CONT:integer:=200; --modificar este valor para modificar tiempo que el muñeco salta
-				ANCHO_CONTADOR:integer:=20); -- modificar para que el vector pueda contar hasta numero de arriba
+	Generic (VAL_SAT_CONT:integer:=200;-- modificar para cambiar tiempo de ataque
+				VAL_SAT_CONT1:integer:=300; -- modificar para cambiar tiempo de defensa
+				ANCHO_CONTADOR:integer:=8); -- modificar para que el vector pueda contar hasta numero de arriba
 				
     Port ( clk : in  STD_LOGIC;
            rst : in  STD_LOGIC;
@@ -41,7 +42,7 @@ architecture Behavioral of estado_luchador is
 	
 	type estado is (ataque, normal,defensa);
 	signal estado_actual,estado_nuevo:estado;
-	signal p_cont,cont: STD_LOGIC_VECTOR (ancho_contador downto 0); -- contador de tiempo de ataque, para que no sea indefinido
+	signal p_cont,cont,cont1,p_cont1: STD_LOGIC_VECTOR (ancho_contador downto 0); -- contador de tiempo de ataque, para que no sea indefinido
 	signal up_ant,down_ant: STD_LOGIC;
 
 begin
@@ -53,6 +54,7 @@ begin
 	elsif(rising_edge(clk)) then
 		estado_actual<=estado_nuevo;
 		cont<=p_cont;
+		cont1<=p_cont1;
 		up_ant<=up;
 		down_ant<=down;
 	end if;
@@ -66,6 +68,7 @@ case estado_actual is
 	when normal =>		
 		estado_lucha<="00";
 		p_cont<=(others => '0');
+		p_cont1<=(others => '0');
 		
 		if (up='1' and up_ant='0') then
 			estado_nuevo<=	ataque;
@@ -88,9 +91,8 @@ case estado_actual is
 		
 	when defensa =>		
 		estado_lucha<="10";
-		p_cont<=(others => '0');
 		
-		if down='0' then
+		if down='0' or (unsigned(cont1) = VAL_SAT_CONT1) then
 			estado_nuevo<=	normal;
 		else
 			estado_nuevo<=	defensa;
