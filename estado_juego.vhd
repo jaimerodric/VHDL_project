@@ -24,7 +24,7 @@ begin
 
 	dist <= pos2 - pos1;
 
-	if (dist < 35) AND (pos2 > pos1) then
+	if (dist < 20) AND (pos2 > pos1) then
 		if(estado_luchador1 = "01" AND estado_luchador2 = "00") then
 			fin_juego <= '1';
 		elsif (estado_luchador1 = "00" AND estado_luchador2 = "01") then
