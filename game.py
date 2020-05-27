@@ -81,8 +81,6 @@ def update_screen(dut,layouts,images1,images2): #(x, y, color):
                 layouts[0].blit(images2[1], (dut.pos2,10))
             if dut.estado_luchad2 == 0b10:
                 layouts[0].blit(images2[2], (dut.pos2,10))
-           
-        
 
         pygame.display.flip()
 
