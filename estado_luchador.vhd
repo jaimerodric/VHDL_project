@@ -2,6 +2,22 @@
 -- Company: 
 -- Engineer: 
 -- 
+-- Create Date:    21:43:08 05/28/2020 
+-- Design Name: 
+-- Module Name:    estado_luchador - Behavioral 
+-- Project Name: 
+-- Target Devices: 
+-- Tool versions: 
+-- Description: 
+--
+-- Dependencies: 
+--
+-- Revision: 
+-- Revision 0.01 - File Created
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
 -- Create Date:    14:26:39 05/21/2020 
 -- Design Name: 
 -- Module Name:    estado_luchador - Behavioral 
