@@ -40,12 +40,14 @@ SCREEN_SIZE       = (600,300)
 def init_screen():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_SIZE))
+
     
     n_player1=pygame.transform.scale(pygame.image.load('P1_neutral.png').convert_alpha(),(100,200))
     a_player1=pygame.transform.flip(pygame.transform.scale(pygame.image.load('P1_attack.png').convert_alpha(),(100,200)),True,False)
     d_player1=pygame.transform.scale(pygame.image.load('P1_defense.png').convert_alpha(),(100,200))
-    
-    images1=[n_player1,a_player1,d_player1]
+
+    heart=pygame.transform.scale(pygame.image.load('life.png').convert_alpha(),(30,30))
+    images1=[n_player1,a_player1,d_player1,heart]
 
     n_player2=pygame.transform.scale(pygame.image.load('P2_neutral.png').convert_alpha(),(100,200))
     a_player2=pygame.transform.scale(pygame.image.load('P2_attack.png').convert_alpha(),(100,200))
@@ -68,6 +70,25 @@ def update_screen(dut,layouts,images1,images2): #(x, y, color):
             layouts[0].blit(layouts[2],(0,0))
         else:
             layouts[0].blit(layouts[1],(0,0))
+            if dut.vida1==3:
+                layouts[0].blit(images1[3], (30,20))
+                layouts[0].blit(images1[3], (70,20))
+                layouts[0].blit(images1[3], (110,20))
+            if dut.vida1==2:
+                layouts[0].blit(images1[3], (30,20))
+                layouts[0].blit(images1[3], (70,20))
+            if dut.vida1==1:
+                layouts[0].blit(images1[3], (30,20))
+            if dut.vida2==3:
+                layouts[0].blit(images1[3], (460,20))
+                layouts[0].blit(images1[3], (500,20))
+                layouts[0].blit(images1[3], (540,20))
+            if dut.vida2==2:
+                layouts[0].blit(images1[3], (500,20))
+                layouts[0].blit(images1[3], (540,20))
+            if dut.vida2==1:
+                layouts[0].blit(images1[3], (540,20))
+                
             if dut.estado_luchad1 ==0b00:
                 layouts[0].blit(images1[0], (dut.pos1,posicion_y))
             if dut.estado_luchad1 == 0b01:
@@ -118,6 +139,9 @@ def check_for_events(dut):
                 elif event.key == pygame.K_d:
                     dut._log.info("D key pressed")
                     dut.D = 1
+                elif event.key == pygame.K_r:
+                    dut._log.info("R key pressed")
+                    dut.reset = 1                   
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP:
                     dut._log.info("UP key released")
@@ -143,6 +167,9 @@ def check_for_events(dut):
                 elif event.key == pygame.K_d:
                     dut._log.info("D key released")
                     dut.D = 0
+                elif event.key == pygame.K_r:
+                    dut._log.info("R key released")
+                    dut.reset = 0
 
 @cocotb.test()
 def test(dut):
