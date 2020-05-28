@@ -60,7 +60,7 @@ begin
 	end if;
 end process;
 
-comb: process(estado_actual,up_ant,up,down,down_ant,cont)
+comb: process(estado_actual,up_ant,up,down,down_ant,cont,cont1)
 begin
 
 case estado_actual is 
