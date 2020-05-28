@@ -46,7 +46,7 @@ PORT (
 	pos2: out integer;
 	estado_luchad1: out std_logic_vector(1 downto 0);
 	estado_luchad2: out std_logic_vector(1 downto 0);
-	fin_juego: out std_logic;
+	fin_juego: out integer;
 	vida1 : out integer;
 	vida2 : out integer);
 	
@@ -85,9 +85,9 @@ component estado_juego
            pos1 : in  integer;
            estado_luchador1 : in  STD_LOGIC_VECTOR (1 downto 0);
            estado_luchador2 : in  STD_LOGIC_VECTOR (1 downto 0);
-			  vida1 : out integer:= 3;
-			  vida2 : out integer:= 3;           
-			  fin_juego : out  STD_LOGIC);
+			  vida1 : out integer;
+			  vida2 : out integer;           
+			  fin_juego : out  integer);
 end component;
 
 signal estado_lucha1, estado_lucha2 : std_logic_vector(1 downto 0);
