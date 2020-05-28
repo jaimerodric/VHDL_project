@@ -10,8 +10,8 @@ entity estado_juego is
            pos1 : in  integer;
            estado_luchador1 : in  STD_LOGIC_VECTOR (1 downto 0);
            estado_luchador2 : in  STD_LOGIC_VECTOR (1 downto 0);
-			  vida1 : out integer:= 3;
-			  vida2 : out integer:= 3;
+			  vida1 : out integer;
+			  vida2 : out integer;
            fin_juego : out  STD_LOGIC);
 end estado_juego;
 
@@ -23,11 +23,12 @@ signal corazones2: integer := 3;
 signal p_corazones1: integer;
 signal p_corazones2: integer;
 signal fin, p_fin : std_logic;
+signal estado_luchador1_ant, estado_luchador2_ant: STD_LOGIC_VECTOR (1 downto 0);
 
 begin
 
 vida1<=corazones1;
-vida2<=corazones1;
+vida2<=corazones2;
 fin_juego<=fin;
 
 sinc:process(clk,rst)
@@ -40,19 +41,24 @@ begin
 		corazones1 <= p_corazones1;
 		corazones2 <= p_corazones2;
 		fin<=p_fin;
+		estado_luchador1_ant<=estado_luchador1;
+		estado_luchador2_ant<=estado_luchador2;
 	end if;
 end process;
 
 
-comb: process(dist,pos1,pos2,estado_luchador1,estado_luchador2,fin,corazones1,corazones2,p_corazones1, p_corazones2)
+comb: process(dist,pos1,pos2,estado_luchador1,estado_luchador2,fin,corazones1,corazones2,p_corazones1, p_corazones2,estado_luchador1_ant,estado_luchador2_ant)
 begin
 
 	dist <= pos2 - pos1;
+	
+	p_corazones2 <= corazones2;
+	p_corazones1 <= corazones1;
 
 	if (dist < 80) AND (pos2 > pos1) then
-		if(estado_luchador1 = "01" AND estado_luchador2 = "00" and corazones2 > 1) then
+		if(estado_luchador1 = "01" AND estado_luchador2 = "00" and corazones2 > 0 and estado_luchador1_ant = "00") then
 				p_corazones2 <= corazones2 - 1;
-		elsif (estado_luchador1 = "00" AND estado_luchador2 = "01" and corazones1 > 1) then
+		elsif (estado_luchador1 = "00" AND estado_luchador2 = "01" and corazones1 > 0 and estado_luchador2_ant = "00") then
 				p_corazones1 <= corazones1 - 1;
 		end if;
 	end if;
