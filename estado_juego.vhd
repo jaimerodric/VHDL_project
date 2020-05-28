@@ -12,7 +12,7 @@ entity estado_juego is
            estado_luchador2 : in  STD_LOGIC_VECTOR (1 downto 0);
 			  vida1 : out integer;
 			  vida2 : out integer;
-           fin_juego : out  STD_LOGIC);
+           fin_juego : out  integer);
 end estado_juego;
 
 architecture Behavioral of estado_juego is
@@ -22,7 +22,7 @@ signal corazones1: integer := 3;
 signal corazones2: integer := 3;
 signal p_corazones1: integer;
 signal p_corazones2: integer;
-signal fin, p_fin : std_logic;
+signal fin, p_fin : integer;
 signal estado_luchador1_ant, estado_luchador2_ant: STD_LOGIC_VECTOR (1 downto 0);
 
 begin
@@ -34,7 +34,7 @@ fin_juego<=fin;
 sinc:process(clk,rst)
 begin
 	if(rst='1')then
-		fin<='0';
+		fin<=0;
 		corazones1 <= 3;
 		corazones2 <= 3;
 	elsif(rising_edge(clk)) then
@@ -64,7 +64,7 @@ begin
 	end if;
 
 	if corazones2 = 0 or corazones1 = 0 then
-		p_fin <= '1';
+		p_fin <= 1;
 	else
 		p_fin <= fin;
 	end if;
