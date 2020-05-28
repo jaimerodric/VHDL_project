@@ -22,23 +22,24 @@ signal corazones1: integer := 3;
 signal corazones2: integer := 3;
 signal p_corazones1: integer;
 signal p_corazones2: integer;
-signal fin : std_logic;
+signal fin, p_fin : std_logic;
 
 begin
 
 vida1<=corazones1;
 vida2<=corazones1;
+fin_juego<=fin;
 
 sinc:process(clk,rst)
 begin
 	if(rst='1')then
-		fin_juego<='0';
+		fin<='0';
 		corazones1 <= 3;
 		corazones2 <= 3;
 	elsif(rising_edge(clk)) then
 		corazones1 <= p_corazones1;
 		corazones2 <= p_corazones2;
-		fin_juego<=fin;
+		fin<=p_fin;
 	end if;
 end process;
 
@@ -57,12 +58,14 @@ begin
 	end if;
 
 	if corazones2 = 0 or corazones1 = 0 then
-		fin <= '1';
+		p_fin <= '1';
 	else
-		fin <= '0';
+		p_fin <= fin;
 	end if;
 
 end process;
 
 end Behavioral;
+
+
 
