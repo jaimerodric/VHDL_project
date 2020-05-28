@@ -2,6 +2,15 @@
 -- Company: 
 -- Engineer: 
 -- 
+-- Create Date:    21:48:34 05/28/2020 
+-- Design Name: 
+-- Module Name:    top_level - Behavioral 
+-- Project Name: 
+-- Target Devices: 
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
 -- Create Date:    19:29:13 05/26/2020 
 -- Design Name: 
 -- Module Name:    top_level - Behavioral 
@@ -65,7 +74,7 @@ component posicion_luchador
            rst : in  STD_LOGIC;
 			  estado_lucha : in  STD_LOGIC_VECTOR (1 downto 0);
            right : in  STD_LOGIC;
-           left : in  STD_LOGIC;
+           left : in  STD_LOGIC; 
            posicion : out  integer);
 end component;
 
