@@ -83,7 +83,7 @@ begin
 
 	ESTADO_LUCHADOR1 : estado_luchador 
 						generic map( VAL_SAT_CONT => 200, 
-							     VAL_SAT_CONT1:integer:=300;
+							     VAL_SAT_CONT1=>300,
 										 ANCHO_CONTADOR=> 8)
 										 
 						port map 	(clk => clk, 
@@ -94,7 +94,7 @@ begin
 						
 	ESTADO_LUCHADOR2 : estado_luchador 	
 						generic map( VAL_SAT_CONT => 200,
-							     VAL_SAT_CONT1:integer:=300; 
+							     VAL_SAT_CONT1=>300, 
 										 ANCHO_CONTADOR=> 8)
 										 
 						port map (clk => clk, 
