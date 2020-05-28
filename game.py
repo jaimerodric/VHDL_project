@@ -49,15 +49,17 @@ def init_screen():
     heart=pygame.transform.scale(pygame.image.load('life.png').convert_alpha(),(30,30))
     images1=[n_player1,a_player1,d_player1,heart]
 
-    n_player2=pygame.transform.scale(pygame.image.load('P2_neutral.png').convert_alpha(),(100,200))
-    a_player2=pygame.transform.scale(pygame.image.load('P2_attack.png').convert_alpha(),(100,200))
-    d_player2=pygame.transform.scale(pygame.image.load('P2_defense.png').convert_alpha(),(100,200))
+    n_player2=pygame.transform.flip(pygame.transform.scale(pygame.image.load('P2_neutral.png').convert_alpha(),(100,200)),True,False)
+    a_player2=pygame.transform.flip(pygame.transform.scale(pygame.image.load('P2_attack.png').convert_alpha(),(140,200)),True,False)
+    d_player2=pygame.transform.flip(pygame.transform.scale(pygame.image.load('P2_defense.png').convert_alpha(),(100,200)),True,False)
     images2=[n_player2,a_player2,d_player2]
 
     background=pygame.transform.scale(pygame.image.load('background.jpg').convert(),(SCREEN_SIZE))
-    game_over=pygame.transform.scale(pygame.image.load('game_over.jpg').convert(),(SCREEN_SIZE))
+    game_over1=pygame.transform.scale(pygame.image.load('game_over1.jpg').convert(),(SCREEN_SIZE))
+    game_over2=pygame.transform.scale(pygame.image.load('game_over2.jpg').convert(),(SCREEN_SIZE))
+    
 
-    layouts=[screen,background,game_over]
+    layouts=[screen,background,game_over1,game_over2]
     
     return layouts,images1,images2
 
@@ -67,7 +69,10 @@ def update_screen(dut,layouts,images1,images2): #(x, y, color):
         yield RisingEdge(dut.clk)
         posicion_y=70
         if dut.fin_juego==1:
-            layouts[0].blit(layouts[2],(0,0))
+            if dut.vida1==0:
+                layouts[0].blit(layouts[2],(0,0))
+            if dut.vida2==0:
+                layouts[0].blit(layouts[3],(0,0))
         else:
             layouts[0].blit(layouts[1],(0,0))
             if dut.vida1==3:

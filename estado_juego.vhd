@@ -55,7 +55,7 @@ begin
 	p_corazones2 <= corazones2;
 	p_corazones1 <= corazones1;
 
-	if (dist < 80) AND (pos2 > pos1) then
+	if (dist < 100) AND (pos2 > pos1) then
 		if(estado_luchador1 = "01" AND estado_luchador2 = "00" and corazones2 > 0 and estado_luchador1_ant = "00") then
 				p_corazones2 <= corazones2 - 1;
 		elsif (estado_luchador1 = "00" AND estado_luchador2 = "01" and corazones1 > 0 and estado_luchador2_ant = "00") then
